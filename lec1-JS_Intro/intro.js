@@ -85,7 +85,24 @@ for(let k in data){
 
 // keys=> unique, values=>duplicate
 
-//Arrays
+//Arrays => can have mix of values
+
+let values=[
+    21,
+    "ankit ahlawat",
+    true,
+
+    [1,2,3,4,5,[6,7,8,9,10,[11,12,13,14,15]]],
+
+    {  // nesting allowed
+        name:"captain america",
+        rating: 8
+    },
+];
+console.log(values);
+console.log(values[3][5][5][4]);
+console.log(values[4].rating);
+
 
 
 
