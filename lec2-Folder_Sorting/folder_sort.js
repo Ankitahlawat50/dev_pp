@@ -2,6 +2,7 @@ const { KeyObject } = require("crypto");
 const fs = require("fs");
 const path=require('path');
 const { createInflate } = require("zlib");
+//let folderpathex='./Downloads';
 let folderpath='./Downloads';
 let extensions=require('./util');
 let extFolderPath;
@@ -19,36 +20,52 @@ function checkfolder(extension){
 }
 
 function createfolder(){
+    
     fs.mkdirSync(extFolderPath);
 }
 
-function movefile(fileName){
+function movefile(fileName,folderpath){
     let sourcepath=`${folderpath}/${fileName}`;
+    console.log(folderpath);
     let destinationpath=`${extFolderPath}/${fileName}`;
     fs.copyFileSync(sourcepath,destinationpath);
+    if(sourcepath !== destinationpath){
+        fs.unlinkSync(sourcepath);
+    }
 
-    fs.unlinkSync(sourcepath);
 }
 
 function sortFolder(folderpath){
     // get content of the folderpath
     let content=fs.readdirSync(folderpath);
     for(let i=0;i<content.length;i++){
-        //get extension of each file
-        let extensionName=path.extname(content[i]);
-        console.log(extensionName);
 
-        let extensionfolderexist=checkfolder(extensionName);
-        if(extensionfolderexist){
-            //movefile
-            movefile(content[i]);
+        let isdir=fs.lstatSync(`${folderpath}/${content[i]}`).isDirectory();
+
+        if(isdir){
+            console.log("it is a folder");
+            sortFolder(`${folderpath}/${content[i]}`);
         }
         else{
-            //createfile
-            createfolder();
-            //movefile
-            movefile(content[i]);
-        }
+            let extensionName=path.extname(content[i]);
+
+            // console.log(content[i]);
+            // console.log(extensionName);
+
+            let extensionfolderexist=checkfolder(extensionName);
+            if(extensionfolderexist){
+             //movefile
+             movefile(content[i],folderpath);
+            }
+            else{
+                //createfile
+                createfolder();
+                //movefile
+                movefile(content[i],folderpath);
+            }
+            }
+            //get extension of each file
+            
     }
 }
 
