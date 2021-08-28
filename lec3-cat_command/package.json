@@ -1,0 +1,15 @@
+{
+  "name": "lec3-cat_command",
+  "version": "1.0.0",
+  "main": "wcat.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "cat": "wCat.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

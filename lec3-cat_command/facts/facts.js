@@ -26,8 +26,9 @@ console.log(data);
 // }
 
 // -s 
-let removedspaces=[];
+
 function removeextraspaces(data){
+    let removedspaces=[];
     let first=false;
     for(let i=0;i<data.length;i++){
         if(data[i]=="" && first==false){
@@ -47,9 +48,10 @@ removeextraspaces(data);
 
 // -b add line number
 
-let count=1;
-let addedlinenumber=[]
 function addlinenumbertoempty(data){
+    
+    let count=1;
+    let addedlinenumber=[];
     for(let i=0;i<data.length;i++){
         if(data[i]!=""){
             addedlinenumber.push(`${count}. ${data[i]}`);
