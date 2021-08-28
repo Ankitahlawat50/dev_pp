@@ -26,7 +26,7 @@ function createfolder(){
 
 function movefile(fileName,folderpath){
     let sourcepath=`${folderpath}/${fileName}`;
-    console.log(folderpath);
+    //console.log(folderpath);
     let destinationpath=`${extFolderPath}/${fileName}`;
     fs.copyFileSync(sourcepath,destinationpath);
     if(sourcepath !== destinationpath){
