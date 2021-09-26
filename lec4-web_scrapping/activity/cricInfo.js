@@ -12,7 +12,7 @@ request(mostWicket,function(error,response,body){
 });
 function parseDatacomm(html){
     let ch=cheerio.load(html);
-    let comm=ch('.match-comment .d-flex.match-comment-padder.align-items-center .match-comment-wrapper .match-comment-long-text p');
+    let comm=ch('div[itemprop="articleBody"] p');
     let c=ch(comm[0]).text();
     console.log(c);
 
