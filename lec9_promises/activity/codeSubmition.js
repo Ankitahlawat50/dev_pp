@@ -49,8 +49,9 @@ browserOpenPromise.then(function(browser){
     return loginPromise;
 })
 .then(function(){
-    let startPrepPRomise=waitandclick('.ui-btn.ui-btn-normal.ui-btn-primary.recommended-prep-kit-card-cta.ui-btn-link.ui-btn-styled');
+    let startPrepPRomise=waitandclick('.ui-btn.ui-btn-normal.ui-btn-large.ui-btn-primary.ui-btn-link.ui-btn-styled');
     return startPrepPRomise;
+    
 })
 .then(function(){
     let waitPromise=tab.waitForSelector('.ui-btn.ui-btn-normal.ui-btn-line-primary.interview-ch-li-cta.ui-btn-link.ui-btn-styled',{visible:true});
@@ -79,10 +80,17 @@ browserOpenPromise.then(function(browser){
     });
     //console.log(completeLinks);
     let oneQuesSolvePromise=solveQuestion(completeLinks[0]);
+    
+    for(let i=2;i<completeLinks.length;i++){
+        oneQuesSolvePromise=oneQuesSolvePromise.then(function(){
+            let nextQuestionSolvePromise=solveQuestion(completeLinks[i]);
+            return nextQuestionSolvePromise;
+        })
+    }
     return oneQuesSolvePromise;
 })
-.then(function(){
-    
+.then(function(data){
+    console.log("all questions solved !!");
 })
 .catch(function (error) {
     console.log(error);
@@ -132,16 +140,99 @@ function getCode(){
     })
 }
 
-// function pasteCode(){
-//     new Promise 
-// }
+function pasteCode(){
+    return new Promise(function(resolve,reject){
+        let problemClickPromise=tab.click('#tab-1-item-0');
+        problemClickPromise.then(function(){
+            let checkboxClickPromise=waitandclick(".checkbox-input");
+            return checkboxClickPromise;
+        })
+        .then(function () {
+
+            let waitForTextBoxPromise = tab.waitForSelector(".custominput");
+            return waitForTextBoxPromise;
+        })
+        .then(function(){
+            let codeTypePromise=tab.type('.custominput',Gcode);
+            return codeTypePromise;
+        })
+        .then(function(){
+            let controlDownPromise=tab.keyboard.down("Control");
+            return controlDownPromise;
+        })
+        .then(function(){
+            let selectAllPromise=tab.keyboard.press("A");
+            return selectAllPromise;
+        })
+        .then(function(){
+            let cutPromise=tab.keyboard.press("X");
+            return cutPromise;
+        })
+        .then(function(){
+            let clickedOnCodeBoxPromise = tab.click('.monaco-editor.no-user-select.vs');
+            return clickedOnCodeBoxPromise;
+        })
+        .then(function(){
+            let aKeyPressPromise = tab.keyboard.press("A");
+            return aKeyPressPromise;
+          })
+          .then(function () {
+            let vKeyPressPromise = tab.keyboard.press("V");
+            return vKeyPressPromise;
+          })
+          .then(function () {
+            let controlKeyUpPromise = tab.keyboard.up("Control");
+            return controlKeyUpPromise;
+          }).then(function(){
+            resolve();
+          })
+          .catch(function(error){
+            reject(error);
+          })
+
+
+    })
+}
+function handleLock(){
+    
+    return new Promise( function(resolve , reject){
+        let waitPromise = tab.waitForSelector('.ui-btn.ui-btn-normal.ui-btn-primary.ui-btn-styled' , {visible:true , timeout:5000});
+        waitPromise.then(function(){
+          let lockBtnPromise = tab.$('.ui-btn.ui-btn-normal.ui-btn-primary.ui-btn-styled');
+          return lockBtnPromise;
+        })
+        .then(function(lockBtn){
+          // console.log(lockBtn);
+          let lockBtnClickPromise = lockBtn.click();
+          return lockBtnClickPromise;
+        })
+        .then(function(){
+          // clicked on lock btn
+          // lock btn found
+          console.log("lock btn found !!!");
+          resolve();
+        })
+        .catch(function(error){
+          // lock btn not found
+          console.log("lock btn not found !!!");
+          resolve();
+        })
+    
+      })
+}
 
 function solveQuestion(qLink){
     return new Promise(function (resolve, reject) {
         let gotoPromise = tab.goto(qLink);
         gotoPromise.then(function () {
+            console.log("go to editorial");
             let waitAndClickPromise = waitandclick('a[data-attr2="Editorial"]');
             return waitAndClickPromise;
+        })
+
+        .then(function(data){
+            let lockbtnPromise=handleLock();
+            return lockbtnPromise;
         })
         
         .then(function () {
@@ -152,14 +243,18 @@ function solveQuestion(qLink){
         .then(function(){
             
             //paste code in the editor form Gcode
-            // let PastePromise=pasteCode();
-            // return PastePromise;
+            let PastePromise=pasteCode();
+            return PastePromise;
         })
         .then(function(){
-
+            let submitPromise=tab.click(".ui-btn.ui-btn-normal.ui-btn-primary.pull-right.hr-monaco-submit.ui-btn-styled");
+            return submitPromise;
+        })
+        .then(function(){
+            resolve();
         })
         .catch(function(error){
-            console.log(error);
+            reject(error);
         })
     });
 }
