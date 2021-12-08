@@ -1,6 +1,7 @@
-let puppeteer=require("puppeteer");
-const id="vadafa5095@erpipo.com";
-const pw="123456789";
+const puppeteer = require("puppeteer");
+const id = "xifov12632@aramidth.com";
+const pw = "123456789";
+
 
 let challenges = require("./challenges");
 
@@ -35,7 +36,7 @@ let challenges = require("./challenges");
 
     // simultaenously open tabs for all the challenges
     for(let i=0 ; i<challenges.length ; i++){
-        await addChallenge(challenges[i] , browser , createChallengeLink );
+        addChallenge(challenges[i] , browser , createChallengeLink );
         await tab.waitForTimeout(3000);
     }
     
