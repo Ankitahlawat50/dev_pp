@@ -38,7 +38,8 @@ function initDB(){
                 name:tname,
                 value:"",
                 formula:"",
-                childrens:[]
+                childrens:[],
+                parents: []
             }
             row.push(obj);
         }
