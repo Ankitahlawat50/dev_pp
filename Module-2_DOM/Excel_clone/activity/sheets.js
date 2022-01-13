@@ -12,16 +12,13 @@ addSheetBtn.addEventListener("click", function (e) {
   sheetDiv.innerHTML = `Sheet ${sheetId + 1}`;
   // <div class="sheet" sheetid="1">Sheet 2</div>
   sheetsList.append(sheetDiv);
-
   //UI should be new
   initUI();
-
   // new sheet db 
   // sheetsdb.push(new sheet db)
   // db = new sheet db
   initDB();
 });
-
 sheetsList.addEventListener("click", function (e) {
   let selectedSheet = e.target;
   // active-sheet
@@ -32,20 +29,16 @@ sheetsList.addEventListener("click", function (e) {
   // it will remove activesheet class from current active sheet
   document.querySelector(".active-sheet").classList.remove("active-sheet");
   selectedSheet.classList.add("active-sheet");
-
   initUI();
-
   //set current db to active sheet db;
   let sheetId = selectedSheet.getAttribute("sheetid");
-
+  
   // set db and visited cells
   db = sheetsDB[sheetId].db;
   visitedCells = sheetsDB[sheetId].visitedCells;
-
   // set UI according to that db
   setUI();
 });
-
 function setUI(){
     // for(let i=0 ; i<100 ; i++){
     //     for(let j=0 ; j<26 ; j++){
@@ -59,7 +52,6 @@ function setUI(){
       document.querySelector(`div[rowid="${rowId}"][colid="${colId}"]`).innerHTML = cellObject.value;
     }
 }
-
 function initUI(){
     // for(let i=0 ; i<100 ; i++){
     //     for(let j=0 ; j<26 ; j++){
@@ -68,6 +60,8 @@ function initUI(){
     // }
     for(let i=0 ; i<visitedCells.length ; i++){
       let {rowId , colId} = visitedCells[i];
-      document.querySelector(`div[rowid="${rowId}"][colid="${colId}"]`).innerHTML = "";
+      let cell = document.querySelector(`div[rowid="${rowId}"][colid="${colId}"]`);
+      cell.innerHTML = "";
+      cell.style = "";
     }
-} 
+}
