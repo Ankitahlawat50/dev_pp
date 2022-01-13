@@ -1,5 +1,4 @@
 let cellsContentDiv = document.querySelector(".cells-content");
-
 function initCells(){
     let cellsContent = "<div class='top-left-cell'></div>";
     cellsContent += "<div class='top-row'>"
@@ -7,7 +6,6 @@ function initCells(){
         cellsContent += `<div class='top-row-cell'>${String.fromCharCode(65+i)}</div>`
     }
     cellsContent += "</div>"
-
     cellsContent += "<div class='left-col'>"
     for(let i=0 ; i<100 ; i++){
         cellsContent += `<div class="left-col-cell">${i+1}</div>`
@@ -25,27 +23,33 @@ function initCells(){
     cellsContentDiv.innerHTML = cellsContent;    
 }
 initCells();
+let sheetsDB = [];
 
-let db;
+let db; // active-sheet db
+let visitedCells; // active sheet ke visited cells
 
 function initDB(){
-    db=[];
-    for(let i=0;i<100;i++){
-        let row=[];
-        for(let j=0;j<26;j++){
-            let tname=String.fromCharCode(j+65)+(i+1)+"";
-            let obj={
-                name:tname,
+    let newSheetDB = [];
+    for(let i=0 ; i<100 ; i++){
+        let row = [];
+        for(let j=0 ; j<26 ; j++){
+            //i j
+            let name = String.fromCharCode(j+65)+(i+1)+"";
+            let cellObject = {
+                name:name,
                 value:"",
                 formula:"",
                 childrens:[],
-                parents: []
+                parents:[],
+                visited:false
             }
-            row.push(obj);
+            row.push(cellObject);
         }
-        db.push(row);
+        newSheetDB.push(row);
     }
+    visitedCells = [];
+    db = newSheetDB;
+    sheetsDB.push({db:newSheetDB ,visitedCells:visitedCells});
+    console.log(sheetsDB);
 }
-
-
 initDB();

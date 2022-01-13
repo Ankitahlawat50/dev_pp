@@ -2,7 +2,9 @@
     box-sizing: border-box;
     margin: 0px;
     padding: 0px;
+    font-family: 'Roboto', sans-serif;
 }
+
 .menu {
     border: 1px solid;
     height: 30px;
@@ -15,7 +17,6 @@
     border: 1px solid;
     height: 30px;
 }
-
 .cells-content {
     height: calc( 100vh - 150px);
     /* background: lightgreen; */
@@ -24,9 +25,13 @@
 }
 
 .sheets {
-    border: 1px solid;
+    /* border: 1px solid; */
     height: 30px;
+    display: flex;
+    background: #ecf0f1;
+    align-items: center;
 }
+
 .row {
     display: flex;
 }
@@ -34,8 +39,8 @@
     border: 1px solid;
     min-height: 30px;
     min-width: 70px;
+    max-width: 70px;
 }
-
 .top-left-cell {
     height: 30px;
     width: 30px;
@@ -43,7 +48,6 @@
     position: absolute;
     z-index: 3;
 }
-
 .top-row {
     display: flex;
     position: absolute;
@@ -52,7 +56,6 @@
     left: 30px;
     z-index: 2;
 }
-
 .top-row-cell {
     border: 1px solid;
     min-height: 30px;
@@ -61,7 +64,6 @@
     justify-content: center;
     align-items: center;
 }
-
 .left-col {
     background: lightgreen;
     width: 30px;
@@ -69,7 +71,6 @@
     top: 30px;
     z-index: 2;
 }
-
 .left-col-cell {
     height: 30px;
     width: 30px;
@@ -79,9 +80,44 @@
     justify-content: center;
     align-items: center;
 }
-
 .cells {
     position: absolute;
     top: 30px;
     left: 30px;
+}
+
+.add-sheet {
+    width: 30px;
+    /* background: aqua; */
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-right: 1px solid lightgray;
+}
+
+.add-sheet .fas {
+    color: #2ecc71;
+}
+
+.sheets-list {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+.sheet {
+    border-right: 1px solid lightgray;
+    width: 70px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.active-sheet {
+    background: white;
+    font-weight: bold;
 }
